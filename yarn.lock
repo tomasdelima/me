@@ -4800,6 +4800,10 @@ react-on-rails@^10.1.4:
   version "10.1.4"
   resolved "https://registry.yarnpkg.com/react-on-rails/-/react-on-rails-10.1.4.tgz#50e1b7596928746cff2ef90c00adb8e7cd41fe98"
 
+react-quick-styles@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-quick-styles/-/react-quick-styles-2.0.4.tgz#048e2ee60abbd72d0c7584f1df51b6e095307d81"
+
 react@^16.3.1:
   version "16.3.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.3.1.tgz#4a2da433d471251c69b6033ada30e2ed1202cfd8"
