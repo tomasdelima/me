@@ -11,14 +11,8 @@ export default class TerminalLine extends Optimized {
     this.toogleCursor()
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.cursor != this.props.cursor) {
-      this.setState({showCursor: nextProps.cursor})
-    }
-  }
-
   toogleCursor () {
-    if (!this.props.cursor) {
+    if (!this.props.line.cursor) {
       this.setState({showCursor: false})
     } else {
       this.setState({showCursor: !this.state.showCursor})
@@ -26,12 +20,12 @@ export default class TerminalLine extends Optimized {
     }
   }
 
+  shouldComponentUpdate () {return true}
+
   render() {
     return <Flex>
-      <Flex color={this.props.text1Color || "white"}>{this.props.text1}</Flex>
-      {!!this.props.text1 && !!this.props.text2 && (this.props.text1[this.props.text1.length - 1] == ' ') && <Flex>&nbsp;</Flex>}
-      <Flex color={this.props.text2Color || "white"}>{this.props.text2}</Flex>
-      {this.state.showCursor && "|"}
+      {this.props.line.fragments.map((fragment, i) => <Flex key={i} style={fragment.style} dangerouslySetInnerHTML={{__html: fragment.text.replace(/ /g, '&nbsp;')}} />)}
+      {this.props.line.cursor && this.state.showCursor && "|"}
     </Flex>
   }
 }
