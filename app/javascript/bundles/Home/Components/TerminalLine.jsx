@@ -4,7 +4,6 @@ import Optimized from '../Lib/Optimized'
 export default class TerminalLine extends Optimized {
   initialize () {
     this.bind = ['toogleCursor']
-    this.state = {}
   }
 
   componentDidMount () {
@@ -26,6 +25,7 @@ export default class TerminalLine extends Optimized {
     return <Flex>
       {this.props.line.fragments.map((fragment, i) => <Flex key={i} style={fragment.style} dangerouslySetInnerHTML={{__html: fragment.text.replace(/ /g, '&nbsp;')}} />)}
       {this.props.line.cursor && this.state.showCursor && "|"}
+      &nbsp;
     </Flex>
   }
 }

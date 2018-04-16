@@ -3,7 +3,6 @@ import Optimized from '../Lib/Optimized'
 
 export default class Terminal extends Optimized {
   initialize () {
-    // this.bind = ['newLine', 'writeFragments', 'writeFragment', 'writeCharacters', 'writeCharacter']
     this.state = {lines: []}
 
     this.animate = 1
@@ -23,9 +22,15 @@ export default class Terminal extends Optimized {
     if (this.indexes.lines == this.props.lines.length) return
     if (this.indexes.lines > 0) this.state.lines[this.indexes.lines - 1].cursor = false
 
-    this.state.lines.push({fragments: [], cursor: true})
-    this.indexes.fragments = 0
-    this.writeFragments()
+    if (this.props.lines[this.indexes.lines].image) {
+      var line = this.props.lines[this.indexes.lines]
+      this.state.lines.push({image: line.image, style: line.style, cursor: true})
+      this.forceUpdate()
+    } else {
+      this.state.lines.push({fragments: [], cursor: true})
+      this.indexes.fragments = 0
+      this.writeFragments()
+    }
   }
 
   writeFragments () {
@@ -57,7 +62,7 @@ export default class Terminal extends Optimized {
       setTimeout(() => {
         this.indexes.fragments += 1
         this.writeFragments()
-      }, this.props.lines[this.indexes.lines][this.indexes.fragments].wait)
+      }, this.animate ? this.props.lines[this.indexes.lines][this.indexes.fragments].wait : 0)
     }
   }
 
@@ -73,7 +78,7 @@ export default class Terminal extends Optimized {
 
   render() {
     return <Flex lineHeight={20} font="monospace" start1 start2 column BG="#002B36" color="#D5E1E2" padding={10} high={s.Height}>
-      {this.state.lines.map((line, i) => <TerminalLine key={i} line={line} />)}
+      {this.state.lines.map((line, i) => line.image ? <Avatar key={i} image={line.image} style={line.style} /> : <TerminalLine key={i} line={line} />)}
     </Flex>
   }
 }
